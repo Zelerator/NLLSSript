@@ -36,5 +36,3 @@
                 -- Kick the player after showing the fake ban
                 task.wait(1) -- Give a slight delay before kicking
                 player:Kick("YOU HAVE BEEN BANNED! EXPLOITS DETECTED!")
-            end,
-        })

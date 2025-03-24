@@ -1,15 +1,1 @@
-        local player = game.Players.LocalPlayer
-        local starterGui = game:GetService("StarterGui")
-        
-        -- Display fake ban message
-        starterGui:SetCore("SendNotification", {
-            Title = "USE A DIFFERENT SCRIPT!",
-            Text = "Asaiya is Unavailable!",
-            Duration = 3
-        })
-
-        -- Kick the player after showing the fake ban
-        task.wait(1) -- Give a slight delay before kicking
-        player:Kick("ASAIYA IS UNAVAILABLE RIGHT NOW!")
-    end,
-})
+print("Script is Active")

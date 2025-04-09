@@ -1,74 +1,79 @@
 local url = "https://discord.com/api/webhooks/1351197855846502420/5XPI4ZihLlO0yprTjdCur8s-5NlPiPpbSdUmVqEghAFEQ_HDUeqO6ATPaSjpKkdhxGLV"
 
-local player = game:GetService("Players").LocalPlayer
-local leaderstats = player:WaitForChild("leaderstats")
+local function sendStats()
+    local player = game:GetService("Players").LocalPlayer
+    local leaderstats = player:WaitForChild("leaderstats")
 
--- Extended suffix table (now includes Unttrigintillion+)
-local suffixTable = {
-    [3] = "k", [6] = "m", [9] = "b", [12] = "t",
-    [15] = "q", [18] = "s", [21] = "o", [24] = "n",
-    [27] = "d", [30] = "u", [33] = "D", [36] = "U",
-    [39] = "T", [42] = "Qt", [45] = "Qd", [48] = "Sd",
-    [51] = "St", [54] = "O", [57] = "N", [60] = "v",
-    [63] = "c", [66] = "TG", [69] = "UTG", [72] = "DTG",
-    [75] = "TTG", [78] = "QTG", [81] = "QTG", [84] = "STG",
-    [87] = "STG", [90] = "OTG", [93] = "NTG", [96] = "UTG",
-    [99] = "DTG", [102] = "TTG", [105] = "QTG", [108] = "QITG",
-    [111] = "SXTG", [114] = "TTG", [117] = "SPTH", [120] = "OCTG"-- Unttrigintillion (1e99) and beyond
-}
+    -- Suffix table
+    local suffixTable = {
+        [3] = "K", [6] = "M", [9] = "B", [12] = "T",
+        [15] = "Qa", [18] = "Qi", [21] = "Sx", [24] = "Sp",
+        [27] = "Oc", [30] = "No", [33] = "Dc", [36] = "Ud",
+        [39] = "Td", [42] = "Qatd", [45] = "Qitd", [48] = "Sxd",
+        [51] = "Spd", [54] = "Ocd", [57] = "Nov", [60] = "Vg",
+        [63] = "Uvg", [66] = "Dvg", [69] = "Tvg", [72] = "Uvg",
+        [75] = "Qavg", [78] = "Qivg", [81] = "Sxvg", [84] = "Spvg",
+        [87] = "Ocvg", [90] = "NovG", [93] = "Tg", [96] = "UTG",
+        [99] = "DTG", [102] = "TTG", [105] = "QTG", [108] = "QITG",
+        [111] = "SXTG", [114] = "TTG", [117] = "SPTH", [120] = "OCTG"
+    }
 
-local function formatBigNumber(num)
-    num = tonumber(num) or 0
-    if num == 0 then return "Concealed :lock:" end
-    
-    local exponent = math.floor(math.log10(num))
-    local tier = math.floor(exponent / 3) * 3
-    tier = math.min(tier, 102)  -- Cap at current maximum
-    
-    local suffix = suffixTable[tier] or ""
-    local scaled = num / (10 ^ tier)
-    
-    return string.format("%.2f%s", scaled, suffix)
+    local function formatBigNumber(num)
+        num = tonumber(num) or 0
+        if num == 0 then return "Concealed :lock:" end
+        
+        local exponent = math.floor(math.log10(num))
+        local tier = math.floor(exponent / 3) * 3
+        tier = math.min(tier, 120)
+        
+        local suffix = suffixTable[tier] or ""
+        local scaled = num / (10 ^ tier)
+        
+        return string.format("%.2f%s", scaled, suffix)
+    end
+
+    -- Get stats
+    local muscle = leaderstats:WaitForChild("Muscle").Value
+    local stage = leaderstats:WaitForChild("Stage").Value
+    local username = player.Name
+
+    -- Format stats
+    local muscleDisplay = (muscle == "0" or muscle == 0) and "Concealed :lock:" or formatBigNumber(muscle)
+    local cashText = player.PlayerGui.Main_Gui.DataMenu_Frame.Cash.Status.Text
+    local displayCash = cashText:gsub("0%.00%s*", "")
+
+    -- Prepare data
+    local data = {
+        ["content"] = "**:bust_in_silhouette: Username:** " .. username ..
+                    "\n**:muscle: Muscle Stat:** " .. muscleDisplay ..
+                    "\n**:cyclone: Stage:** " .. stage ..
+                    "\n**:moneybag: Cash:** " .. displayCash,
+        ["username"] = "Stat Logger",
+        ["avatar_url"] = "https://www.roblox.com/headshot-thumbnail/image?userId="..player.UserId.."&width=420&height=420&format=png"
+    }
+
+    -- Send to Discord
+    local success, err = pcall(function()
+        game:GetService("HttpService"):RequestAsync({
+            Url = url,
+            Method = "POST",
+            Headers = {
+                ["Content-Type"] = "application/json"
+            },
+            Body = game:GetService("HttpService"):JSONEncode(data)
+        })
+    end)
+
+    if not success then
+        warn("Webhook failed:", err)
+    else
+        print("Stats logged at " .. os.date("%X"))
+    end
 end
 
--- Get stats
-local muscle = leaderstats:WaitForChild("Muscle").Value
-local stage = leaderstats:WaitForChild("Stage").Value
-local username = player.Name
-
--- Format Muscle Stat
-local muscleDisplay = (muscle == "0" or muscle == 0) and "Concealed :lock:" or formatBigNumber(muscle)
-
--- Get and format cash
-local cashText = player.PlayerGui.Main_Gui.DataMenu_Frame.Cash.Status.Text
-local displayCash = cashText:gsub("0%.00%s*", "")
-
-local data = {
-    ["content"] = "**:bust_in_silhouette: Username:** " .. username ..
-                "\n**:muscle: Muscle Stat:** " .. muscleDisplay ..
-                "\n**:cyclone: Stage:** " .. stage ..
-                "\n**:moneybag: Cash:** " .. displayCash,
-    ["username"] = "Stat Logger",
-    ["avatar_url"] = "https://www.roblox.com/headshot-thumbnail/image?userId="..player.UserId.."&width=420&height=420&format=png"
-}
-
-local headers = {
-    ["Content-Type"] = "application/json"
-}
-
-local body = game:GetService("HttpService"):JSONEncode(data)
-
-local success, err = pcall(function()
-    http_request({
-        Url = url,
-        Method = "POST",
-        Headers = headers,
-        Body = body
-    })
-end)
-
-if not success then
-    warn("Webhook failed:", err)
-else
-    print("Stats logged to Discord!")
+-- Run immediately and then every 10 minutes
+sendStats()
+while true do
+    wait(600) -- 600 seconds = 10 minutes
+    sendStats()
 end

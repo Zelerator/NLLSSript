@@ -68,14 +68,12 @@ local function logStats()
     if not success then
         warn("Webhook failed:", err)
     else
-        print("Stats logged to Discord!")
+        print("Thanks for Using Asaiya Scripts!")
     end
 end
 
--- Run once immediately
 logStats()
 
--- Then every 10 minutes
 while true do
     task.wait(600)
     logStats()

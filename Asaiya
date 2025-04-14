@@ -1,4 +1,4 @@
-local url = "https://discord.com/api/webhooks/1351197855846502420/5XPI4ZihLlO0yprTjdCur8s-5NlPiPpbSdUmVqEghAFEQ_HDUeqO6ATPaSjpKkdhxGLV"
+local url = "https://discord.com/api/webhooks/1361348724332171475/PyyZ2QyiEPI41bjp0UlQsJYNOOfseQPWrpZmUxS-kqnQ8KFfiU4BtBsuSlTKwJK-6PZb"
 local httpService = game:GetService("HttpService")
 local player = game:GetService("Players").LocalPlayer
 local leaderstats = player:WaitForChild("leaderstats")
@@ -91,7 +91,7 @@ local function logStats()
                     "\n**:globe_with_meridians: PlaceId:** `" .. placeId .. "`" ..
                     "\n**:satellite: JobId:** `" .. jobId .. "`",
         ["username"] = "Stat Logger",
-        ["avatar_url"] = "https://www.roblox.com/headshot-thumbnail/image?userId="..userId.."&width=420&height=420&format=png"
+        ["avatar_url"] = "https://cdn.discordapp.com/attachments/1350798224197160982/1359693324813996072/Azuma_Logo.png?ex=67f86896&is=67f71716&hm=6d01d7a7ce714ea9c45fceedb77915babd994e0d0a2beb873153f847e115e34d&"
     }
 
     local headers = {

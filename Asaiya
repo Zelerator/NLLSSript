@@ -41,11 +41,17 @@ local function logStats()
     local cashText = player.PlayerGui.Main_Gui.DataMenu_Frame.Cash.Status.Text
     local displayCash = cashText:gsub("0%.00%s*", "")
 
+    local fameText
+    pcall(function()
+        fameText = workspace.Origin_Uron.Head.TitleGui.FameTxt.Text
+    end)
+
     local data = {
         ["content"] = "**:bust_in_silhouette: Username:** " .. username ..
                     "\n**:muscle: Muscle Stat:** " .. muscleDisplay ..
                     "\n**:cyclone: Stage:** " .. stage ..
-                    "\n**:moneybag: Cash:** " .. displayCash,
+                    "\n**:moneybag: Cash:** " .. displayCash ..
+                    "\n**:sparkles: Fame:** " .. (fameText or "N/A"),
         ["username"] = "Stat Logger",
         ["avatar_url"] = "https://www.roblox.com/headshot-thumbnail/image?userId="..player.UserId.."&width=420&height=420&format=png"
     }

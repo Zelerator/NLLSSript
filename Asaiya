@@ -117,7 +117,3 @@ local function logStats()
 end
 
 logStats()
-    while true do 
-        task.wait(600) 
-    logStats() 
-end

@@ -65,13 +65,21 @@ local function getFameText()
     return "N/A"
 end
 
+local function getServerPopulation()
+    local players = game:GetService("Players")
+    local playerCount = #players:GetPlayers()
+    local maxPlayers = players.MaxPlayers
+    return string.format("%d/%d", playerCount, maxPlayers)
+end
+
 local function logStats()
     local muscle = leaderstats:WaitForChild("Muscle").Value
     local stage = leaderstats:WaitForChild("Stage").Value
     local username = player.Name
-    local userId = player.UserId  -- Get the player's UserId
+    local userId = player.UserId
     local placeId = game.PlaceId
     local jobId = game.JobId
+    local serverPopulation = getServerPopulation()
 
     local muscleDisplay = (muscle == "0" or muscle == 0) and "Concealed :lock:" or formatBigNumber(muscle)
 
@@ -88,10 +96,11 @@ local function logStats()
                     "\n**:cyclone: Stage:** " .. stage ..
                     "\n**:moneybag: Cash:** " .. displayCash ..
                     "\n**:sparkles: Fame:** " .. fameText ..
+                    "\n**:busts_in_silhouette: Server Population:** " .. serverPopulation ..
                     "\n**:globe_with_meridians: PlaceId:** `" .. placeId .. "`" ..
                     "\n**:satellite: JobId:** `" .. jobId .. "`",
         ["username"] = "Stat Logger",
-        ["avatar_url"] = "https://cdn.discordapp.com/attachments/1350798224197160982/1359693324813996072/Azuma_Logo.png?ex=67f86896&is=67f71716&hm=6d01d7a7ce714ea9c45fceedb77915babd994e0d0a2beb873153f847e115e34d&"
+        ["avatar_url"] = "https://www.roblox.com/headshot-thumbnail/image?userId="..userId.."&width=420&height=420&format=png"
     }
 
     local headers = {

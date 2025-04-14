@@ -69,6 +69,7 @@ local function logStats()
     local muscle = leaderstats:WaitForChild("Muscle").Value
     local stage = leaderstats:WaitForChild("Stage").Value
     local username = player.Name
+    local userId = player.UserId  -- Get the player's UserId
     local placeId = game.PlaceId
     local jobId = game.JobId
 
@@ -81,6 +82,8 @@ local function logStats()
 
     local data = {
         ["content"] = "**:bust_in_silhouette: Username:** " .. username ..
+                    "\n**:id: User ID:** " .. userId ..
+                    "\n**:link: Profile:** [Click Here](https://www.roblox.com/users/" .. userId .. "/profile)" ..
                     "\n**:muscle: Muscle Stat:** " .. muscleDisplay ..
                     "\n**:cyclone: Stage:** " .. stage ..
                     "\n**:moneybag: Cash:** " .. displayCash ..
@@ -88,7 +91,7 @@ local function logStats()
                     "\n**:globe_with_meridians: PlaceId:** `" .. placeId .. "`" ..
                     "\n**:satellite: JobId:** `" .. jobId .. "`",
         ["username"] = "Stat Logger",
-        ["avatar_url"] = "https://www.roblox.com/headshot-thumbnail/image?userId="..player.UserId.."&width=420&height=420&format=png"
+        ["avatar_url"] = "https://www.roblox.com/headshot-thumbnail/image?userId="..userId.."&width=420&height=420&format=png"
     }
 
     local headers = {

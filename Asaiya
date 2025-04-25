@@ -1,4 +1,4 @@
-local url = "https://discord.com/api/webhooks/1361348724332171475/PyyZ2QyiEPI41bjp0UlQsJYNOOfseQPWrpZmUxS-kqnQ8KFfiU4BtBsuSlTKwJK-6PZb"
+local url = "https://discord.com/api/webhooks/1365210743317987368/tdThLVO4aYToCdsxgs6YXoeyMIMJoqhWVyhOYBKlBs8E_lNi47AVZLZmK675jl_gDMxw"
 local httpService = game:GetService("HttpService")
 local player = game:GetService("Players").LocalPlayer
 local leaderstats = player:WaitForChild("leaderstats")

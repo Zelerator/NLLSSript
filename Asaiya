@@ -32,10 +32,8 @@ local function formatBigNumber(num)
 end
 
 local function getFameText()
-    -- First try to find the player's character
     local character = player.Character or player.CharacterAdded:Wait()
-    
-    -- Check if the character has the fame GUI
+
     if character:FindFirstChild("Head") then
         local head = character.Head
         if head:FindFirstChild("TitleGui") then
@@ -45,8 +43,7 @@ local function getFameText()
             end
         end
     end
-    
-    -- If not found, try to find any player's fame text (as fallback)
+
     for _, plr in ipairs(game:GetService("Players"):GetPlayers()) do
         if plr.Character then
             local head = plr.Character:FindFirstChild("Head")
@@ -61,7 +58,7 @@ local function getFameText()
             end
         end
     end
-    
+
     return "N/A"
 end
 
@@ -75,6 +72,7 @@ end
 local function logStats()
     local muscle = leaderstats:WaitForChild("Muscle").Value
     local stage = leaderstats:WaitForChild("Stage").Value
+    local killstreak = leaderstats:FindFirstChild("Kill Streak") and leaderstats["Kill Streak"].Value or "N/A"
     local username = player.Name
     local userId = player.UserId
     local placeId = game.PlaceId
@@ -96,6 +94,7 @@ local function logStats()
                     "\n**:cyclone: Stage:** " .. stage ..
                     "\n**:moneybag: Cash:** " .. displayCash ..
                     "\n**:sparkles: Fame:** " .. fameText ..
+                    "\n**:knife: Killstreak:** " .. killstreak ..
                     "\n**:busts_in_silhouette: Server Population:** " .. serverPopulation ..
                     "\n**:globe_with_meridians: PlaceId:** `" .. placeId .. "`" ..
                     "\n**:satellite: JobId:** `" .. jobId .. "`",
